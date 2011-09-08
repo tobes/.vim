@@ -1,4 +1,4 @@
-load('/home/toby/bin/js/fulljslint.js');
+load('/home/toby/.vim/bin/js/fulljslint.js');
  
 var body = arguments[0];
  
