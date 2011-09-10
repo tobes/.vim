@@ -13,6 +13,7 @@ set shiftwidth=4
 set smarttab
 set expandtab
 set smartindent
+set iskeyword+='
 
 "open new things
 nnoremap <C-N> :tabnew 
@@ -44,10 +45,3 @@ function! Jslint()
 endfunction
 
 command! Js   call Jslint()
-
-"Clean white space
-function! Clean()
-    execute '%s/ +$//'
-endfunction
-
-command! Cl  call Clean()
