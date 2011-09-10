@@ -1,19 +1,23 @@
 set nocompatible
 
-filetype on            " enables filetype detection
-filetype plugin on     " enables filetype specific plugins
-
 "pathogen bundles
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
+
+if has("autocmd")
+  filetype on            " enables filetype detection
+  filetype plugin on     " enables filetype specific plugins
+
+  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+endif
 
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set smarttab
-set expandtab
+set noexpandtab
 set smartindent
-set iskeyword+='
 
 "open new things
 nnoremap <C-N> :tabnew
