@@ -54,3 +54,4 @@ command! Js   call Jslint()
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
 set listchars=tab:¿\ ,eol:¬
+nmap <leader>n :set number!<CR>
