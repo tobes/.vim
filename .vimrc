@@ -16,7 +16,7 @@ set smartindent
 set iskeyword+='
 
 "open new things
-nnoremap <C-N> :tabnew 
+nnoremap <C-N> :tabnew
 "move between tabs
 nnoremap <C-Right> :tabnext 
 nnoremap <C-Left> :tabprev 
@@ -28,8 +28,8 @@ syntax on
 set hlsearch
 
 "fuf
-nnoremap <F2> :FufFile  
-nnoremap <F3> :FufMruFile  
+nnoremap <F2> :FufFile 
+nnoremap <F3> :FufMruFile 
 let g:fuf_keyOpenTabpage = "<cr>"
 let g:fuf_modesDisable = []
 
