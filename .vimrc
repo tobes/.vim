@@ -99,9 +99,19 @@ nmap <silent> <leader>e :EraseBadWhitespace<CR>
 nmap <silent> <leader>c :ColourColumn<CR>
 nmap <silent> <leader>s :set spell!<CR>
 nmap <silent> <leader>v :tabedit $MYVIMRC<CR>
+nmap <leader>h :call HexHighlight()<CR>
 
 
 " Source the vimrc file after saving it
 if has("autocmd")
   autocmd bufwritepost .vimrc source $MYVIMRC
 endif
+
+" Show syntax highlighting groups for word under cursor
+nmap <C-S-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
