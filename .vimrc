@@ -7,6 +7,7 @@ call pathogen#runtime_append_all_bundles()
 if has("autocmd")
   filetype on            " enables filetype detection
   filetype plugin on     " enables filetype specific plugins
+  filetype indent on
 
   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
@@ -29,6 +30,7 @@ nnoremap <C-S-Right> :tablast
 
 "basic options
 syntax on
+set autoindent
 set hlsearch
 set spelllang=en_gb
 set listchars=tab:¿\ ,eol:¬
