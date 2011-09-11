@@ -98,3 +98,10 @@ nmap <silent> <leader>w :ToggleBadWhitespace<CR>
 nmap <silent> <leader>e :EraseBadWhitespace<CR>
 nmap <silent> <leader>c :ColourColumn<CR>
 nmap <silent> <leader>s :set spell!<CR>
+nmap <silent> <leader>v :tabedit $MYVIMRC<CR>
+
+
+" Source the vimrc file after saving it
+if has("autocmd")
+  autocmd bufwritepost .vimrc source $MYVIMRC
+endif
