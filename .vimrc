@@ -87,7 +87,11 @@ endfunction
 
 command! ColourColumn call ColourColumn()
 
-" Shortcut to rapidly toggle `set list`
-nmap <leader>l :set list!<CR>
 set listchars=tab:¿\ ,eol:¬
-nmap <leader>n :set number!<CR>
+" Shortcut to rapidly toggle `set list`
+nmap <silent> <leader>l :set list!<CR>
+nmap <silent> <leader>n :set number!<CR>
+nmap <silent> <leader>w :ToggleBadWhitespace<CR>
+nmap <silent> <leader>e :EraseBadWhitespace<CR>
+nmap <silent> <leader>c :ColourColumn<CR>
+nmap <silent> <leader>s :set spell!<CR>
