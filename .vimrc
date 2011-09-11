@@ -37,6 +37,18 @@ nnoremap <F3> :FufMruFile
 let g:fuf_keyOpenTabpage = "<cr>"
 let g:fuf_modesDisable = []
 
+" text formatting see what we have we will use perl's autoformat if is
+" it there else try to use par
+!perl -e'use Text::Autoformat'
+if !v:shell_error
+	set formatprg=perl\ -MText\:\:Autoformat\ -e'autoformat{all=>1}'
+else
+	if executable("par")
+		set formatprg=par
+	endif
+endif
+
+
 "Js linting
 function! Jslint()
     execute 'w'
