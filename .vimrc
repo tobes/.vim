@@ -19,8 +19,8 @@ set smarttab
 set noexpandtab
 set smartindent
 
-"open new things
-nnoremap <C-N> :tabnew
+"open new things * whitespace intentional *
+nnoremap <C-N> :tabnew 
 "move between tabs
 nnoremap <C-Right> :tabnext 
 nnoremap <C-Left> :tabprev 
@@ -30,6 +30,8 @@ nnoremap <C-S-Right> :tablast
 "basic options
 syntax on
 set hlsearch
+set spelllang=en_gb
+set listchars=tab:¿\ ,eol:¬
 
 "fuf
 nnoremap <F2> :FufFile 
@@ -87,7 +89,6 @@ endfunction
 
 command! ColourColumn call ColourColumn()
 
-set listchars=tab:¿\ ,eol:¬
 " Shortcut to rapidly toggle `set list`
 nmap <silent> <leader>l :set list!<CR>
 nmap <silent> <leader>n :set number!<CR>
