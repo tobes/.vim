@@ -62,6 +62,30 @@ endfunction
 
 command! Js   call Jslint()
 
+" colour scheme
+function! RandomColour()
+	let mycolors = split(globpath(&rtp,"**/colors/*.vim"),"\n")
+	let chosen = mycolors[localtime() % len(mycolors)]
+	exe 'so ' . chosen
+	unlet chosen
+	unlet mycolors
+endfunction
+
+nnoremap <F12> :RandomColour 
+command! RandomColour  call RandomColour()
+
+" show column limit
+function! ColourColumn()
+	if !exists("w:colorcolumns")
+		set cc=81
+		let w:colorcolumns = 1
+	else
+		set cc=0
+		unlet w:colorcolumns
+	endif
+endfunction
+
+command! ColourColumn call ColourColumn()
 
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
