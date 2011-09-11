@@ -33,7 +33,7 @@ syntax on
 set autoindent
 set hlsearch
 set spelllang=en_gb
-set listchars=tab:¿\ ,eol:¬
+set listchars=tab:»\ ,eol:¬
 
 "fuf
 nnoremap <F2> :FufFile 
