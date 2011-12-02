@@ -11,6 +11,8 @@ if has("autocmd")
 
   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
   autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+
+  autocmd BufNewFile,BufRead *.dtml setfiletype django
 endif
 
 set tabstop=4
