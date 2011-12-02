@@ -1,7 +1,7 @@
-load('/home/toby/.vim/bin/js/fulljslint.js');
- 
+load('~/.vim/bin/js/fulljslint.js');
+
 var body = arguments[0];
- 
+
 var result = JSLINT(body);
 if (result) {
  print('All good.');
