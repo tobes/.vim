@@ -21,7 +21,7 @@ function! HexHighlight()
                 while match(currentLine, '#\x\{3}\(\x\{3}\)\?', 0, hexLineMatch) != -1
                     let hexMatch = matchstr(currentLine, '#\x\{3}\(\x\{3}\)\?', 0, hexLineMatch)
 					" work out if black or white is a good contrast
-					if match(hexMatch, hex6reg) != -1
+					if len(hexMatch) == 7
 						let red = str2nr(substitute(hexMatch, hex6reg, '\2', ''),16)
 						let green = str2nr(substitute(hexMatch, hex6reg, '\3', ''),16)
 						let blue = str2nr(substitute(hexMatch, hex6reg, '\4', ''),16)
@@ -33,7 +33,7 @@ function! HexHighlight()
 						let green = (green * 16) + green
 						let blue = (blue * 16) + blue
 					endif
-					if (red * 299) + (green * 587) + (blue * 114) > 125000 && red + green + blue > 500
+					if (red * 299) + (green * 587) + (blue * 114) > 127500
 						let hexFg = '#000000'
 					else
 						let hexFg = '#FFFFFF'
