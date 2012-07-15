@@ -118,20 +118,20 @@ nmap <leader>h :call HexHighlight()<CR>
 
 " Source the vimrc file after saving it
 if has("autocmd")
-  autocmd bufwritepost .vimrc source $MYVIMRC
+	autocmd bufwritepost .vimrc source $MYVIMRC
 endif
 
 " Show syntax highlighting groups for word under cursor
 nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+	if !exists("*synstack")
+		return
+	endif
+	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
 if has("gui_running")
-  if has("gui_gtk2")
-    set guifont=Inconsolata\ 12
-  endif
+	if has("gui_gtk2")
+		set guifont=Inconsolata\ 12
+	endif
 endif
