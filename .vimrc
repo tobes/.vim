@@ -52,6 +52,7 @@ set listchars=tab:»\ ,eol:¬
 "fuf
 nnoremap <F2> :FufFile 
 nnoremap <F3> :FufMruFile 
+nnoremap <C-F2> :FufRenewCache 
 let g:fuf_keyOpenTabpage = "<cr>"
 let g:fuf_modesDisable = []
 
