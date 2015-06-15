@@ -68,19 +68,6 @@ else
 endif
 
 
-"Js linting
-function! Jslint()
-	execute 'w'
-	let nose_output = system('js ~/.vim/bin/js/runjslint.js "`cat ' . expand('%') . '`" | python2 ~/.vim/bin/python/format_lint_output.py' )
-	execute 'tabnew'
-	setlocal buftype=nofile readonly modifiable
-	silent put=nose_output
-	keepjumps 0d
-	setlocal nomodifiable
-endfunction
-
-command! Js   call Jslint()
-
 " colour scheme
 function! RandomColour()
 	let mycolors = split(globpath(&rtp,"**/colors/*.vim"),"\n")

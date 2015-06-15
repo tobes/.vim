@@ -1,0 +1,6 @@
+jshint - JS linting
+===================
+
+git submodule: https://github.com/Shutnik/jshint2.vim.git
+depends:  node.js npm
+install: npm install -g jshint
