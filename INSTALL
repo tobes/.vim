@@ -1,6 +1,11 @@
-jshint - JS linting
-===================
+Vundle
+======
+git submodule update
 
-git submodule: https://github.com/Shutnik/jshint2.vim.git
+
+JS linting
+==========
 depends:  node.js npm
 install: npm install -g jshint
+install: npm install -g jslint
+

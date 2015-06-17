@@ -1,39 +1,76 @@
+" --- START OF Vundle ---
 set nocompatible
+filetype off
 
-"pathogen bundles
-call pathogen#helptags()
-call pathogen#runtime_append_all_bundles()
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+    Plugin 'gmarik/Vundle.vim'
+    Plugin 'L9'
+    Plugin 'FuzzyFinder'
+    Plugin 'ervandew/supertab'
+    Plugin 'scrooloose/syntastic'
+	Plugin 'tpope/vim-fugitive'
+	Plugin 'tpope/vim-surround'
+	Plugin 'tpope/vim-unimpaired'
+
+    Plugin 'bitc/vim-bad-whitespace'
+    Plugin 'chrisbra/Colorizer'
+
+	" html
+    Plugin 'nekrox/vim-html-templates-syntax'
+
+	" Javascript
+    Plugin 'pangloss/vim-javascript'
+    Plugin 'maksimr/vim-jsbeautify'
+    Plugin 'beautify-web/js-beautify'
+
+    " Python
+    Plugin 'tmhedberg/SimpylFold'
+
+	"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+
+call vundle#end()
+filetype plugin indent on
+" --- END OF Vundle ---
 
 if has("autocmd")
-  filetype on            " enables filetype detection
-  filetype plugin on     " enables filetype specific plugins
-  filetype indent on
+    filetype on            " enables filetype detection
+    filetype plugin on     " enables filetype specific plugins
+    filetype indent on
 
-  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-  autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
-  autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
-  autocmd FileType jinja setlocal ts=2 sts=2 sw=2 expandtab
-  autocmd FileType js setlocal ts=2 sts=2 sw=2 expandtab
-  autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
+    augroup GroupFileTypes
+        autocmd!
+        autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+        autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+        autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
+        autocmd FileType jinja setlocal ts=2 sts=2 sw=2 expandtab
+        autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
+        autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
 
-  autocmd BufNewFile,BufRead *.dtml setfiletype django
-  autocmd BufNewFile,BufRead *.html setfiletype jinja
+        autocmd BufNewFile,BufRead *.dtml setfiletype django
+        autocmd BufNewFile,BufRead *.html setfiletype jinja
+    augroup END
 endif
+
+set encoding=utf-8
+set fileencoding=utf-8
 
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set smarttab
-set noexpandtab
+set expandtab
 set smartindent
 
 "open new things * whitespace intentional *
 nnoremap <C-N> :tabnew 
 "move between tabs
-nnoremap <C-Right> :tabnext 
-nnoremap <C-Left> :tabprev 
-nnoremap <C-S-Left> :tabfirst 
-nnoremap <C-S-Right> :tablast 
+nnoremap <C-Right> :tabnext <CR>
+nnoremap <C-Left> :tabprev <CR>
+nnoremap <C-S-Left> :tabfirs <CR>
+nnoremap <C-S-Right> :tablas <CR>
 
 " Bubble single lines
 nmap <C-Up> [e
@@ -47,7 +84,7 @@ syntax on
 set autoindent
 set hlsearch
 set spelllang=en_gb
-set listchars=tab:�\ ,eol:�
+set listchars=tab:→·,eol:¶
 
 "fuf
 nnoremap <F2> :FufFile 
@@ -55,6 +92,63 @@ nnoremap <F3> :FufMruFile
 nnoremap <C-F2> :FufRenewCache 
 let g:fuf_keyOpenTabpage = "<cr>"
 let g:fuf_modesDisable = []
+
+"syntastic
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_aggregate_errors = 1
+
+let g:syntastic_error_symbol = "✗"
+let g:syntastic_warning_symbol = "⚠"
+let g:syntastic_style_error_symbol = "✗"
+let g:syntastic_style_warning_symbol = "⚠"
+
+highlight SyntasticErrorLine guibg=#FCC
+highlight SyntasticWarningLine guibg=#FFC
+highlight SyntasticStyleErrorLine guibg=#CCF
+highlight SyntasticStyleWarningLine guibg=#CCF
+
+highlight SyntasticStyleErrorSign guibg=#99F guifg=#FFF
+highlight SyntasticStyleWarningSign guibg=#99F guifg=#FFF
+
+
+if has("autocmd")
+    augroup GroupBeautify
+        autocmd!
+
+        " for js
+        autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+        autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
+
+        " for html
+        autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+        autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
+
+        " for css or scss
+        autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+        autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
+    augroup END
+endif
+
+
+
+function! ToggleErrors()
+    let old_last_winnr = winnr('$')
+    lclose
+    if old_last_winnr == winnr('$')
+        " Nothing was closed, open syntastic error location panel
+        Errors
+    endif
+endfunction
+
+nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
+
 
 " text formatting see what we have we will use perl's autoformat if is
 " it there else try to use par
@@ -70,11 +164,11 @@ endif
 
 " colour scheme
 function! RandomColour()
-	let mycolors = split(globpath(&rtp,"**/colors/*.vim"),"\n")
-	let chosen = mycolors[localtime() % len(mycolors)]
-	exe 'so ' . chosen
-	unlet chosen
-	unlet mycolors
+    let mycolors = split(globpath(&rtp,"**/colors/*.vim"),"\n")
+    let chosen = mycolors[localtime() % len(mycolors)]
+    exe 'so ' . chosen
+    unlet chosen
+    unlet mycolors
 endfunction
 
 nnoremap <F12> :RandomColour 
@@ -82,18 +176,44 @@ command! RandomColour  call RandomColour()
 
 " show column limit
 function! ColourColumn()
-	if !exists("w:colorcolumns")
-		set cc=81
-		let w:colorcolumns = 1
-	else
-		set cc=0
-		unlet w:colorcolumns
-	endif
+    if !exists("w:colorcolumns")
+        set cc=81
+        let w:colorcolumns = 1
+    else
+        set cc=0
+        unlet w:colorcolumns
+    endif
 endfunction
 
 command! ColourColumn call ColourColumn()
 
-" Shortcut to rapidly toggle `set list`
+
+" show column limit
+function! HexHighlight()
+    if !exists("w:colorizertoggle")
+        execute 'silent ColorHighlight'
+        let w:colorizertoggle = 1
+    else
+        execute 'ColorClear'
+        unlet w:colorizertoggle
+    endif
+endfunction
+
+
+"let g:HLColorScheme = g:colors_name
+"function ToggleSpaceUnderscoring()
+"    if g:HLSpace
+"        highlight Search cterm=underline gui=underline ctermbg=none guibg=none ctermfg=none guifg=none
+"        let @/ = " "
+"    else
+"        highlight clear
+"        silent colorscheme "".g:HLColorScheme
+"        let @/ = ""
+"    endif
+"    let g:HLSpace = !g:HLSpace
+"endfunction
+
+
 nmap <silent> <leader>l :set list!<CR>
 nmap <silent> <leader>n :set number!<CR>
 nmap <silent> <leader>w :ToggleBadWhitespace<CR>
@@ -103,23 +223,31 @@ nmap <silent> <leader>s :set spell!<CR>
 nmap <silent> <leader>v :tabedit $MYVIMRC<CR>
 nmap <leader>h :call HexHighlight()<CR>
 
+" list moving
+nmap <silent> <leader>, :lprev<CR>
+nmap <silent> <leader>. :lnext<CR>
+
 
 " Source the vimrc file after saving it
 if has("autocmd")
-	autocmd bufwritepost .vimrc source $MYVIMRC
+    augroup GroupVimReload
+        autocmd!
+        autocmd bufwritepost .vimrc source $MYVIMRC
+    augroup END
 endif
+
 
 " Show syntax highlighting groups for word under cursor
 nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
-	if !exists("*synstack")
-		return
-	endif
-	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
 if has("gui_running")
-	if has("gui_gtk2")
-		set guifont=Inconsolata\ 12
-	endif
+    if has("gui_gtk2")
+        set guifont=Inconsolata\ 12
+    endif
 endif
