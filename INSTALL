@@ -1,6 +1,7 @@
 Vundle
 ======
 git submodule update
+:PluginsInstall
 
 
 JS linting
