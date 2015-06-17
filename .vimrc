@@ -27,69 +27,22 @@ call vundle#begin()
     Plugin 'beautify-web/js-beautify'
 
     " Python
-    Plugin 'tmhedberg/SimpylFold'
-
+    "Plugin 'tmhedberg/SimpylFold'
+    Plugin 'klen/python-mode'
 	"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 call vundle#end()
 filetype plugin indent on
-" --- END OF Vundle ---
 
-if has("autocmd")
-    filetype on            " enables filetype detection
-    filetype plugin on     " enables filetype specific plugins
-    filetype indent on
 
-    augroup GroupFileTypes
-        autocmd!
-        autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-        autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
-        autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
-        autocmd FileType jinja setlocal ts=2 sts=2 sw=2 expandtab
-        autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
-        autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
+" --- Configure Plugins
 
-        autocmd BufNewFile,BufRead *.dtml setfiletype django
-        autocmd BufNewFile,BufRead *.html setfiletype jinja
-    augroup END
-endif
 
-set encoding=utf-8
-set fileencoding=utf-8
-
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set smarttab
-set expandtab
-set smartindent
-
-"open new things * whitespace intentional *
-nnoremap <C-N> :tabnew 
-"move between tabs
-nnoremap <C-Right> :tabnext <CR>
-nnoremap <C-Left> :tabprev <CR>
-nnoremap <C-S-Left> :tabfirs <CR>
-nnoremap <C-S-Right> :tablas <CR>
-
-" Bubble single lines
-nmap <C-Up> [e
-nmap <C-Down> ]e
-" Bubble multiple lines
-vmap <C-Up> [egv
-vmap <C-Down> ]egv
-
-"basic options
-syntax on
-set autoindent
-set hlsearch
-set spelllang=en_gb
-set listchars=tab:→·,eol:¶
+" pymode
+" does line numbering by default which is enoying disable
+let g:pymode_options = 0
 
 "fuf
-nnoremap <F2> :FufFile 
-nnoremap <F3> :FufMruFile 
-nnoremap <C-F2> :FufRenewCache 
 let g:fuf_keyOpenTabpage = "<cr>"
 let g:fuf_modesDisable = []
 
@@ -117,6 +70,60 @@ highlight SyntasticStyleWarningLine guibg=#CCF
 highlight SyntasticStyleErrorSign guibg=#99F guifg=#FFF
 highlight SyntasticStyleWarningSign guibg=#99F guifg=#FFF
 
+" --- General defaults
+
+syntax on
+set nofoldenable
+set encoding=utf-8
+set fileencoding=utf-8
+
+set smarttab
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
+set smartindent
+set autoindent
+
+set hlsearch
+set spelllang=en_gb
+set listchars=tab:→·,eol:¶
+
+if has("gui_running")
+    if has("gui_gtk2")
+        set guifont=Inconsolata\ 12
+    endif
+endif
+
+
+" --- File type specific actions
+
+if has("autocmd")
+    filetype on            " enables filetype detection
+    filetype plugin on     " enables filetype specific plugins
+    filetype indent on
+
+    augroup GroupFileTypes
+        autocmd!
+        autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+        autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+                    \ complete+=t formatoptions-=t textwidth=79
+                    \ commentstring=#%s define=^\s*\\(def\\\\|class\\)
+        autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
+        autocmd FileType jinja setlocal ts=2 sts=2 sw=2 expandtab
+        autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
+        autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
+
+        autocmd BufNewFile,BufRead *.dtml setfiletype django
+        autocmd BufNewFile,BufRead *.html setfiletype jinja
+    augroup END
+endif
+
+
+" --- Code beautification
+" FIXME need to make this nicer so not keep remapping
+" make function to do this
 
 if has("autocmd")
     augroup GroupBeautify
@@ -138,17 +145,7 @@ endif
 
 
 
-function! ToggleErrors()
-    let old_last_winnr = winnr('$')
-    lclose
-    if old_last_winnr == winnr('$')
-        " Nothing was closed, open syntastic error location panel
-        Errors
-    endif
-endfunction
-
-nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
-
+" FIXME get this working again more portably
 
 " text formatting see what we have we will use perl's autoformat if is
 " it there else try to use par
@@ -162,8 +159,20 @@ else
 endif
 
 
-" colour scheme
+" --- My wonderful functions
+
+function! ToggleErrors()
+    " Syntastic error location panel hide/show
+    let old_last_winnr = winnr('$')
+    lclose
+    if old_last_winnr == winnr('$')
+        Errors
+    endif
+endfunction
+
+
 function! RandomColour()
+    " colour scheme
     let mycolors = split(globpath(&rtp,"**/colors/*.vim"),"\n")
     let chosen = mycolors[localtime() % len(mycolors)]
     exe 'so ' . chosen
@@ -171,11 +180,9 @@ function! RandomColour()
     unlet mycolors
 endfunction
 
-nnoremap <F12> :RandomColour 
-command! RandomColour  call RandomColour()
 
-" show column limit
 function! ColourColumn()
+    " show column limit
     if !exists("w:colorcolumns")
         set cc=81
         let w:colorcolumns = 1
@@ -185,11 +192,9 @@ function! ColourColumn()
     endif
 endfunction
 
-command! ColourColumn call ColourColumn()
 
-
-" show column limit
 function! HexHighlight()
+    " Hide/show colours in buffer
     if !exists("w:colorizertoggle")
         execute 'silent ColorHighlight'
         let w:colorizertoggle = 1
@@ -200,19 +205,51 @@ function! HexHighlight()
 endfunction
 
 
-"let g:HLColorScheme = g:colors_name
-"function ToggleSpaceUnderscoring()
-"    if g:HLSpace
-"        highlight Search cterm=underline gui=underline ctermbg=none guibg=none ctermfg=none guifg=none
-"        let @/ = " "
-"    else
-"        highlight clear
-"        silent colorscheme "".g:HLColorScheme
-"        let @/ = ""
-"    endif
-"    let g:HLSpace = !g:HLSpace
-"endfunction
+function! <SID>SynStack()
+    " Show syntax highlighting groups for word under cursor
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
+
+" --- Commands
+
+command! RandomColour call RandomColour()
+command! ColourColumn call ColourColumn()
+
+
+" --- Key mappings
+
+"open new things * whitespace intentional *
+nnoremap <C-N> :tabnew
+
+"move between tabs
+nnoremap <C-Right> :tabnext <CR>
+nnoremap <C-Left> :tabprev <CR>
+nnoremap <C-S-Left> :tabfirs <CR>
+nnoremap <C-S-Right> :tablas <CR>
+
+"fuf
+nnoremap <F2> :FufFile <CR>
+nnoremap <F3> :FufMruFile <CR>
+nnoremap <C-F2> :FufRenewCache <CR>
+
+" Bubble single lines
+nmap <C-Up> [e
+nmap <C-Down> ]e
+" Bubble multiple lines
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
+
+" Misc
+nmap <C-S-P> :call <SID>SynStack()<CR>
+nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
+nnoremap <F12> :RandomColour <CR>
+
+
+" --- Leaders
 
 nmap <silent> <leader>l :set list!<CR>
 nmap <silent> <leader>n :set number!<CR>
@@ -237,17 +274,4 @@ if has("autocmd")
 endif
 
 
-" Show syntax highlighting groups for word under cursor
-nmap <C-S-P> :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-    if !exists("*synstack")
-        return
-    endif
-    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
 
-if has("gui_running")
-    if has("gui_gtk2")
-        set guifont=Inconsolata\ 12
-    endif
-endif
