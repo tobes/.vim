@@ -109,7 +109,7 @@ if has("autocmd")
     filetype plugin on     " enables filetype specific plugins
     filetype indent on
 
-    augroup GroupFileTypes
+    augroup GroupAutoCmds
         autocmd!
         autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
         autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
@@ -120,15 +120,13 @@ if has("autocmd")
         autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
         autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
 
-        autocmd BufNewFile,BufRead *.dtml setfiletype django
-        autocmd BufNewFile,BufRead *.html setfiletype jinja
-    augroup END
-endif
-
-
         "autocmd BufNewFile,BufRead *.dtml setfiletype django
         "autocmd BufNewFile,BufRead *.html setfiletype jinja
 
+        " Source the vimrc file after saving it
+        autocmd bufwritepost .vimrc source $MYVIMRC
+    augroup END
+endif
 
 
 " FIXME get this working again more portably
@@ -283,15 +281,3 @@ nmap <leader>h :call HexHighlight()<CR>
 " list moving
 nmap <silent> <leader>, :lprev<CR>
 nmap <silent> <leader>. :lnext<CR>
-
-
-" Source the vimrc file after saving it
-if has("autocmd")
-    augroup GroupVimReload
-        autocmd!
-        autocmd bufwritepost .vimrc source $MYVIMRC
-    augroup END
-endif
-
-
-
