@@ -121,27 +121,8 @@ if has("autocmd")
 endif
 
 
-" --- Code beautification
-" FIXME need to make this nicer so not keep remapping
-" make function to do this
-
-if has("autocmd")
-    augroup GroupBeautify
-        autocmd!
-
-        " for js
-        autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
-        autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
-
-        " for html
-        autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
-        autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
-
-        " for css or scss
-        autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
-        autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
-    augroup END
-endif
+        "autocmd BufNewFile,BufRead *.dtml setfiletype django
+        "autocmd BufNewFile,BufRead *.html setfiletype jinja
 
 
 
@@ -214,6 +195,38 @@ function! <SID>SynStack()
 endfunc
 
 
+function! BeautifyFile()
+    echo 'beautify, Filetype: ' . &filetype
+
+    if &filetype == 'javascript'
+        :call JsBeautify()<cr>
+    elseif &filetype == 'html'
+        :call HtmlBeautify()<cr>
+    elseif &filetype == 'css'
+        :call CSSBeautify()<cr>
+    elseif &filetype == 'python'
+        :PymodeLintAuto
+    else
+        echo 'Sorry no beautifier for this filetype'
+    endif
+endfunc
+
+
+function! BeautifyRange()
+    echo 'beautify range, Filetype: ' . &filetype
+
+    if &filetype == 'javascript'
+        :call RangeJsBeautify()<cr>
+    elseif &filetype == 'html'
+        :call RangeHtmlBeautify()<cr>
+    elseif &filetype == 'css'
+        :call RangeCSSBeautify()<cr>
+    else
+        echo 'Sorry no beautifier for this filetype'
+    endif
+endfunc
+
+
 " --- Commands
 
 command! RandomColour call RandomColour()
@@ -248,6 +261,8 @@ nmap <C-S-P> :call <SID>SynStack()<CR>
 nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
 nnoremap <F12> :RandomColour <CR>
 
+nnoremap <silent> <F11> :call BeautifyFile()<CR>
+vnoremap <silent> <F11> :call BeautifyRange()<CR>
 
 " --- Leaders
 
