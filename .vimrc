@@ -27,8 +27,11 @@ call vundle#begin()
     Plugin 'beautify-web/js-beautify'
 
     " Python
-    "Plugin 'tmhedberg/SimpylFold'
     Plugin 'klen/python-mode'
+
+    " Markdown, RestructuredText, Textile previews
+    Plugin 'kannokanno/previm'
+
 	"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 call vundle#end()
@@ -37,6 +40,8 @@ filetype plugin indent on
 
 " --- Configure Plugins
 
+" previm
+let g:previm_open_cmd = 'firefox'
 
 " pymode
 " does line numbering by default which is enoying disable
