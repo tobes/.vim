@@ -168,11 +168,13 @@ endfunction
 function! ColourColumn()
     " show column limit
     if !exists("w:colorcolumns")
-        set cc=81
+        set cc=80
         let w:colorcolumns = 1
+        echo 'colour column enabled'
     else
         set cc=0
         unlet w:colorcolumns
+        echo 'colour column disabled'
     endif
 endfunction
 
@@ -182,14 +184,16 @@ function! HexHighlight()
     if !exists("w:colorizertoggle")
         execute 'silent ColorHighlight'
         let w:colorizertoggle = 1
+        echo 'coloize enabled'
     else
         execute 'ColorClear'
         unlet w:colorizertoggle
+        echo 'coloize disabled'
     endif
 endfunction
 
 
-function! <SID>SynStack()
+function! SynStack()
     " Show syntax highlighting groups for word under cursor
     if !exists("*synstack")
         return
@@ -276,7 +280,7 @@ nmap <silent> <leader>e :EraseBadWhitespace<CR>
 nmap <silent> <leader>c :ColourColumn<CR>
 nmap <silent> <leader>s :set spell!<CR>
 nmap <silent> <leader>v :tabedit $MYVIMRC<CR>
-nmap <leader>h :call HexHighlight()<CR>
+nmap <silent> <leader>h :call HexHighlight()<CR>
 
 " list moving
 nmap <silent> <leader>, :lprev<CR>
