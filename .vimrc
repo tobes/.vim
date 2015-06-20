@@ -256,7 +256,7 @@ endfunc
 " --- Key mappings
 
 "open new things * whitespace intentional *
-nnoremap <C-N> :tabnew
+nnoremap <C-N> :tabnew<space>
 
 "move between tabs
 nnoremap <C-Right> :tabnext <CR>
