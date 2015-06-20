@@ -285,6 +285,9 @@ nnoremap <F12> :RandomColour <CR>
 nnoremap <silent> <F11> :call BeautifyFile()<CR>
 vnoremap <silent> <F11> :call BeautifyRange()<CR>
 
+" lazy add blank lines
+nnoremap <CR> o<esc>
+
 " --- Leaders
 
 nmap <silent> <leader>l :set list!<CR>
