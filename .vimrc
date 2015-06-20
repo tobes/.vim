@@ -20,6 +20,9 @@ call vundle#begin()
     Plugin 'sickill/vim-pasta'
     Plugin 'chrisbra/Colorizer'
 
+    " show indent levels
+    Plugin 'Yggdroot/indentLine'
+
 	" html
     Plugin 'nekrox/vim-html-templates-syntax'
 
@@ -291,6 +294,7 @@ nmap <silent> <leader>c :ColourColumn<CR>
 nmap <silent> <leader>s :set spell!<CR>
 nmap <silent> <leader>v :tabedit $MYVIMRC<CR>
 nmap <silent> <leader>h :call HexHighlight()<CR>
+nmap <silent> <leader>i :IndentLinesToggle<CR>
 
 " list moving
 nmap <silent> <leader>, :lprev<CR>
