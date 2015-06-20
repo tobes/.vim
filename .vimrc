@@ -16,6 +16,8 @@ call vundle#begin()
 	Plugin 'tpope/vim-unimpaired'
 
     Plugin 'bitc/vim-bad-whitespace'
+    " correctly indent on paste
+    Plugin 'sickill/vim-pasta'
     Plugin 'chrisbra/Colorizer'
 
 	" html
