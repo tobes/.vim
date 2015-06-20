@@ -34,6 +34,9 @@ call vundle#begin()
     " Markdown, RestructuredText, Textile previews
     Plugin 'kannokanno/previm'
 
+    " Vim tips
+    Plugin 'glts/vim-cottidie'
+
 	"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 call vundle#end()
@@ -97,6 +100,8 @@ set hlsearch
 set spelllang=en_gb
 set listchars=tab:→·,eol:¶
 
+set cmdheight=2
+
 if has("gui_running")
     if has("gui_gtk2")
         set guifont=Inconsolata\ 12
@@ -127,6 +132,8 @@ if has("autocmd")
 
         " Source the vimrc file after saving it
         autocmd bufwritepost .vimrc source $MYVIMRC
+        " Show tip on vim open
+        autocmd vimEnter *  :CottidieTip
     augroup END
 endif
 
