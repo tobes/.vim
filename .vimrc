@@ -51,6 +51,7 @@ let g:previm_open_cmd = 'firefox'
 " pymode
 " does line numbering by default which is enoying disable
 let g:pymode_options = 0
+let g:pymode_lint_cwindow = 0
 
 "fuf
 let g:fuf_keyOpenTabpage = "<cr>"
