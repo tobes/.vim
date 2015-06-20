@@ -177,6 +177,7 @@ function! RandomColour()
     unlet chosen
     unlet mycolors
 endfunction
+command! RandomColour call RandomColour()
 
 
 function! ColourColumn()
@@ -191,6 +192,7 @@ function! ColourColumn()
         echo 'colour column disabled'
     endif
 endfunction
+command! ColourColumn call ColourColumn()
 
 
 function! HexHighlight()
@@ -205,6 +207,7 @@ function! HexHighlight()
         echo 'coloize disabled'
     endif
 endfunction
+command! HexHighlight call HexHighlight()
 
 
 function! SynStack()
@@ -248,10 +251,6 @@ function! BeautifyRange()
 endfunc
 
 
-" --- Commands
-
-command! RandomColour call RandomColour()
-command! ColourColumn call ColourColumn()
 
 
 " --- Key mappings
@@ -297,7 +296,7 @@ nmap <silent> <leader>e :EraseBadWhitespace<CR>
 nmap <silent> <leader>c :ColourColumn<CR>
 nmap <silent> <leader>s :set spell!<CR>
 nmap <silent> <leader>v :tabedit $MYVIMRC<CR>
-nmap <silent> <leader>h :call HexHighlight()<CR>
+nmap <silent> <leader>h :HexHighlight<CR>
 nmap <silent> <leader>i :IndentLinesToggle<CR>
 
 " list moving
