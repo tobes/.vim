@@ -49,6 +49,10 @@ filetype plugin indent on
 
 " --- Configure Plugins
 
+" vim-airline
+set laststatus=2
+let g:airline_powerline_fonts = 1
+
 " previm
 let g:previm_open_cmd = 'firefox'
 
@@ -106,10 +110,13 @@ set spelllang=en_gb
 set listchars=tab:→·,eol:¶
 
 set cmdheight=2
+set wildmenu
 
 if has("gui_running")
     if has("gui_gtk2")
-        set guifont=Inconsolata\ 12
+        " vim-airline fonts likes odd sizes of Inconsolata
+        set guifont=Inconsolata\ 13
+
     endif
 endif
 
@@ -279,7 +286,7 @@ vmap <C-Down> ]egv
 " Misc
 nmap <C-S-P> :call <SID>SynStack()<CR>
 nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
-nnoremap <F12> :RandomColour <CR>
+nnoremap <silent><F12> :RandomColour <CR> :AirlineRefresh <CR>
 
 nnoremap <silent> <F11> :call BeautifyFile()<CR>
 vnoremap <silent> <F11> :call BeautifyRange()<CR>
